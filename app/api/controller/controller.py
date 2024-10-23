@@ -18,10 +18,29 @@ def create_product(db: Session, product: ProductCreate):
 
 def delete_product(db: Session, product_id: int):
     db_product = db.query(ProductModel).filter(ProductModel.id == product_id).first()
-    return None
+    db.delete(db_product)
+    db.commit()
+    return db_product
 
-def update_product():
-    return None
+def update_product(db: Session, product_id: int, product: ProductUpdate):
+    db_product = db.query(ProductModel).filter(ProductModel.id == product_id).first()
+
+    if db_product is None:
+        return None
+
+    if product.name is not None:
+        db_product.name = product.name
+    if product.description is not None:
+        db_product.description = product.description
+    if product.price is not None:
+        db_product.price = product.price
+    if product.categoria is not None:
+        db_product.categoria = product.categoria
+    if product.email_fornecedor is not None:
+        db_product.email_fornecedor = product.email_fornecedor
+
+    db.commit()
+    return db_product
 
 
     
