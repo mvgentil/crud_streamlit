@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "projeto-streamlit"
+version = "0.1.0"
+description = ""
+authors = ["Matheus Gentil <matheusvgentil@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+streamlit = "^1.39.0"
+sqlalchemy = "^2.0.36"
+pydantic = "^2.9.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
