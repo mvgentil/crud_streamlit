@@ -51,7 +51,7 @@ Este projeto é um sistema de gerenciamento de produtos desenvolvido com **FastA
 
    ```bash
    git clone https://github.com/mvgentil/crud_streamlit.git
-   cd crud_streamlit
+   cd crud_streamlit/src/backend/
    ```
 
 2. Instale as dependências:
@@ -69,44 +69,83 @@ Este projeto é um sistema de gerenciamento de produtos desenvolvido com **FastA
 4. Execute a aplicação:
 
    ```bash
-   uvicorn main:app --reload
+   uvicorn src.backend.main:app --reload
    ```
 
    O Swagger da aplicação estará disponível em `https://127.0.0.1/docs`.
 
+# API de Gerenciamento de Produtos
+
+Esta API permite gerenciar produtos em um sistema, oferecendo funcionalidades para criar, ler, atualizar e deletar produtos.
+
 ## Endpoints da API
 
-### POST /products/
+### 1. Criar um Produto
 
-Cria um novo produto.
+- **Método:** `POST`
+- **URL:** `/products/`
+- **Descrição:** Cria um novo produto no sistema.
+- **Request Body:**
+  - `name` (str): Nome do produto.
+  - `description` (str): Descrição do produto.
+  - `price` (float): Preço do produto.
+  - `categoria` (str): Categoria do produto.
+  - `email_fornecedor` (str): E-mail do fornecedor.
+- **Response:**
+  - **Código de Sucesso:** 200 Created
+  - **Corpo:** Retorna o produto criado com os detalhes.
+  
+### 2. Obter Todos os Produtos
 
-**Body:**
-```json
-{
-  "name": "Nome do produto",
-  "description": "Descrição do produto",
-  "price": 99.99,
-  "categoria": "Eletrônicos",
-  "email_fornecedor": "fornecedor@example.com"
-}
-```
+- **Método:** `GET`
+- **URL:** `/products/`
+- **Descrição:** Retorna uma lista de todos os produtos no sistema.
+- **Response:**
+  - **Código de Sucesso:** 200 OK
+  - **Corpo:** Retorna uma lista de produtos.
 
-**Resposta:**
-- Status: 201 Created
-- Body:
-```json
-{
-  "id": 1,
-  "name": "Nome do produto",
-  "description": "Descrição do produto",
-  "price": 99.99,
-  "categoria": "Eletrônicos",
-  "email_fornecedor": "fornecedor@example.com",
-  "created_at": "2024-10-25T00:00:00Z"
-}
-```
+### 3. Obter um Produto por ID
+
+- **Método:** `GET`
+- **URL:** `/products/{product_id}`
+- **Descrição:** Retorna os detalhes de um produto específico pelo seu ID.
+- **Path Parameters:**
+  - `product_id` (int): ID do produto.
+- **Response:**
+  - **Código de Sucesso:** 200 OK
+  - **Corpo:** Retorna o produto correspondente.
+  - **Código de Erro:** 404 Product Not Found (se o produto não for encontrado)
+
+### 4. Atualizar um Produto
+
+- **Método:** `PUT`
+- **URL:** `/products/{product_id}`
+- **Descrição:** Atualiza os detalhes de um produto específico pelo seu ID.
+- **Path Parameters:**
+  - `product_id` (int): ID do produto.
+- **Request Body:**
+  - `name` (str, opcional): Nome do produto.
+  - `description` (str, opcional): Descrição do produto.
+  - `price` (float, opcional): Preço do produto.
+  - `categoria` (str, opcional): Categoria do produto.
+  - `email_fornecedor` (str, opcional): E-mail do fornecedor.
+- **Response:**
+  - **Código de Sucesso:** 200 OK
+  - **Corpo:** Retorna o produto atualizado.
+  - **Código de Erro:** 404 Product Not Found (se o produto não for encontrado)
+
+### 5. Deletar um Produto
+
+- **Método:** `DELETE`
+- **URL:** `/products/{product_id}`
+- **Descrição:** Remove um produto específico pelo seu ID.
+- **Path Parameters:**
+  - `product_id` (int): ID do produto.
+- **Response:**
+  - **Código de Sucesso:** 200 OK
+  - **Corpo:** Retorna o produto deletado.
+  - **Código de Erro:** 404 Product Not Found (se o produto não for encontrado)
 
 ### TODO
 
-- getProduct, getProducts, deleteProduct, updateProduct
 - Frontend com Streamlit
