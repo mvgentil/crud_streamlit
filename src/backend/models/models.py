@@ -1,11 +1,12 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime
+from sqlalchemy import Column, String, Float, DateTime, Integer
 from sqlalchemy import func
 from db.database import Base
+import uuid
 
 class ProductModel(Base):
     __tablename__ = "products"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, index=True)
     description = Column(String, index=True)
     price = Column(Float, index=True)

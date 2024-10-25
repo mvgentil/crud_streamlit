@@ -1,4 +1,4 @@
-from pydantic import BaseModel, PositiveFloat, EmailStr, field_validator
+from pydantic import BaseModel, PositiveFloat, EmailStr, Field, field_validator
 from enum import Enum
 from datetime import datetime
 from typing import Optional
@@ -9,15 +9,18 @@ class CategoriaBase(Enum):
     categoria3 = "Móveis e decoração"
     categoria4 = "Roupas"
     categoria5 = "Calçados"
-    categoria5 = "Cama, Mesa e Banho"
+    categoria6 = "Cama, Mesa e Banho"
 
 class ProductBase(BaseModel):
+   
     name: str
     description: Optional[str] = None
     price: PositiveFloat
+    categoria: str
     email_fornecedor: EmailStr
+    
 
-    @field_validator("categoria")
+    @field_validator("categoria", check_fields=False)
     def check_categoria(cls, v):
         if v in [item.value for item in CategoriaBase]:
             return v
@@ -41,7 +44,7 @@ class ProductUpdate(BaseModel):
     categoria: Optional[str] = None
     email_fornecedor: Optional[EmailStr] = None
 
-    @field_validator("categoria", pre=True, always=True)
+    @field_validator("categoria", check_fields=False)
     def check_categoria(cls, v):
         if v is None:
             return v
